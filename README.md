@@ -1,2 +1,1 @@
-# kube-fundamentals
-Repo for CN 120 lab scripts 
+Files to install K8s version 1.22 onto 3 nodes
