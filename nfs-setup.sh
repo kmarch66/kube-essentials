@@ -25,8 +25,8 @@ create_NFS_service()
   chmod 777 /data
 
   # Exporting /data directory
-  echo "/data  node0(rw,sync,no_subtree_check)" > /etc/exports
-  echo "/data  node1(rw,sync,no_subtree_check)" >> /etc/exports
+  echo "/data  worker0(rw,sync,no_subtree_check)" > /etc/exports
+  echo "/data  worker1(rw,sync,no_subtree_check)" >> /etc/exports
   exportfs -a
 
   # Restarting NFS server for sharing the /data directory over NFS
@@ -38,7 +38,7 @@ create_NFS_mount ()
 {
 
 # Creating NFS Mount Point on worker nodes
-for node in node0 node1
+for node in worker0 worker1
 do
     scp /etc/hosts ubuntu@$node:~/
     ssh -t ubuntu@$node "sudo mv -f ~/hosts /etc/hosts && \
