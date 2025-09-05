@@ -25,8 +25,8 @@ create_NFS_service()
   chmod 777 /data
 
   # Exporting /data directory
-  echo "/data  node1(rw,sync,no_subtree_check)" > /etc/exports
-  echo "/data  node2(rw,sync,no_subtree_check)" >> /etc/exports
+  echo "/data  node0(rw,sync,no_subtree_check)" > /etc/exports
+  echo "/data  node1(rw,sync,no_subtree_check)" >> /etc/exports
   exportfs -a
 
   # Restarting NFS server for sharing the /data directory over NFS
