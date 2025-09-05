@@ -138,6 +138,8 @@ $ kubectl get nodes
 
 The Kubernetes cluster is ready.
 
+
+
 To install Helm on the master.
 
 $ sudo curl -O https://get.helm.sh/helm-v3.16.2-linux-amd64.tar.gz
@@ -151,6 +153,7 @@ $ rm helm-v3.16.2-linux-amd64.tar.gz
 $ rm -rf linux-amd64
 
 $ helm --version
+
 
 
 To install nfs on the nodes.
