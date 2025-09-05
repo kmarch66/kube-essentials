@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # In order to run this script as intended, the following condtions must be true:
-#    - node1 and node2 must have the private IPs of the lab environment set within the /etc/hosts
+#    - node0 and node1 must have the private IPs of the lab environment set within the /etc/hosts
 #    - script must be executed as the non-privileged ubuntu user context (sudo baked in script) 
 
 # Checking if `sudo` is used with the shell command
@@ -38,7 +38,7 @@ create_NFS_mount ()
 {
 
 # Creating NFS Mount Point on worker nodes
-for node in node1 node2
+for node in node0 node1
 do
     scp /etc/hosts ubuntu@$node:~/
     ssh -t ubuntu@$node "sudo mv -f ~/hosts /etc/hosts && \
