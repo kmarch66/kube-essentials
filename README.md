@@ -1,4 +1,7 @@
-Files to easily install K8s into 3 nodes. Can be modified for different environements and cluster sizes
+README.md
+
+
+Commands to install K8s w/helm and nfs dynamic storage.  Can be modified for different environments and cluster sizes
 
 To install all K8s components on all nodes. 
 Anything in <> should be replaced with appropriate value
