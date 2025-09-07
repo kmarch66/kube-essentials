@@ -24,7 +24,9 @@ Add private IP's and node names to the /etc/hosts file it should look something 
 fe00::0 ip6-localnet   
 ff00::0 ip6-mcastprefix   
 ff02::1 ip6-allnodes   
-ff02::2 ip6-allrouters   
+ff02::2 ip6-allrouters  
+
+Exit and Save the /etc/hosts file
 
 
 $ ping -c 4 worker0
