@@ -16,15 +16,15 @@ Add private IP's and node names to the /etc/hosts file it should look something 
 
 127.0.0.1 localhost
 
-<control0 private IP> control0
-<worker0 private IP> worker0
-<worker1 private IP> worker1
+<control0 private IP> control0    
+<worker0 private IP> worker0   
+<worker1 private IP> worker1   
 
-::1     ip6-localhost ip6-loopback
-fe00::0 ip6-localnet
-ff00::0 ip6-mcastprefix
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
+::1     ip6-localhost ip6-loopback  
+fe00::0 ip6-localnet   
+ff00::0 ip6-mcastprefix   
+ff02::1 ip6-allnodes   
+ff02::2 ip6-allrouters   
 
 
 $ ping -c 4 worker0
