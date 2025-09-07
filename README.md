@@ -169,15 +169,19 @@ To install dynamic provisioned nfs storage class on the nodes if the user can no
 On each cluster node run these to install NFS
 
 $ sudo apt update
+
 $ sudo apt install nfs-kernel-server
+
 $ sudo apt install nfs-common
 
 On the control0 node run these commands
 
 $ sudo mkdir /srv/nfs/kubedata -p
+
 $ sudo chown nobody: /srv/nfs/kubedata/
 
 Edit the /etc/exports file 
+
 $ sudo vi /etc/exports
 
 Add this line to exports file
@@ -185,14 +189,18 @@ Add this line to exports file
 Save and exit vi
 
 $ sudo systemctl enable nfs-server
+
 $ sudo systemctl start nfs-server
+
 $ sudo systemctl status nfs-server
 
-Export the directory to the worker nodes 
+Export the directory to the worker nodes
+
 $ sudo exportfs -rav
 
 Test the nfs mounts
 $ sudo mount -t nfs <ip address of control0>:/srv/nfs/kubedata /mnt
+
 $ mount |grep kubedata 
 
 output looks something like this
@@ -205,8 +213,11 @@ NFS installation is complete
 Now use a helm chart to automate the nfs client provisioner for kubernetes
 
 $ helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+
 $ helm repo update
+
 $ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --set nfs.server=ip-<ip address of control0> --set nfs.path=/srv/nfs/kubedata
+
 $ kubectl get storageclass     
 
 NAME                 PROVISIONER                            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   
