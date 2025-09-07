@@ -154,18 +154,64 @@ $ rm -rf linux-amd64
 
 $ helm --version
 
+Helm is installed
 
-
-To install nfs on the nodes.
-
+If the user on the control0 node can ssh to the worker nodes use this command
 
 $ chmod +x ~/kube-essentials/nfs-setup.sh ; \
          ~/kube-essentials/nfs-setup.sh
 
-     Reading package lists... Done
-     Building dependency tree
-     Reading state information... Done
-     The following additional packages will be installed:
-     keyutils libnfsidmap2 libtirpc1 nfs-common
-     ....
-     Connection to worker1 closed.
+Then jump over the nfs installation section to the helm nfs-client section  
+      
+         
+To install dynamic provisioned nfs storage class on the nodes if the user can not ssh direct from node to node .
+
+On each cluster node run these to install NFS
+
+$ sudo apt update
+$ sudo apt install nfs-kernel-server
+$ sudo apt install nfs-common
+
+On the control0 node run these commands
+
+$ sudo mkdir /srv/nfs/kubedata -p
+$ sudo chown nobody: /srv/nfs/kubedata/
+
+Edit the /etc/exports file 
+$ sudo vi /etc/exports
+
+Add this line to exports file
+/srv/nfs/kubedata    *(rw,sync,no_subtree_check,no_root_squash,no_all_squash,insecure)
+Save and exit vi
+
+$ sudo systemctl enable nfs-server
+$ sudo systemctl start nfs-server
+$ sudo systemctl status nfs-server
+
+Export the directory to the worker nodes 
+$ sudo exportfs -rav
+
+Test the nfs mounts
+$ sudo mount -t nfs <ip address of control0>:/srv/nfs/kubedata /mnt
+$ mount |grep kubedata 
+
+output looks something like this
+   192.168.1.152:/srv/nfs/kubedata on /mnt type nfs4 (rw,relatime,vers=4.2,rsize=1048576,wsize=1048576,namlen=    255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.1.152,local_lock=none,addr=192.168.1.152)
+
+$ sudo unmount /mnt
+
+NFS installation is complete
+
+Now use a helm chart to automate the nfs client provisioner for kubernetes
+
+$ helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+$ helm repo update
+$ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --set nfs.server=ip-<ip address of control0> --set nfs.path=/srv/nfs/kubedata
+$ kubectl get storageclass     
+
+NAME                 PROVISIONER                            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   
+nfs-client           cluster.local/nfs-client-provisioner   Delete          Immediate              true                   
+
+$ kubectl patch storageclass nfs-client -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
+NFS is now set up as the default dynamic storage provisioner for Kubernetes
