@@ -24,9 +24,11 @@ create_NFS_service()
   chown -R nobody:nogroup /data
   chmod 777 /data
 
+  # Add more as needed or change names to reflect your cluster
   # Exporting /data directory
-  echo "/data  worker0(rw,sync,no_subtree_check)" > /etc/exports
-  echo "/data  worker1(rw,sync,no_subtree_check)" >> /etc/exports
+  echo "/data  node1(rw,sync,no_subtree_check)" > /etc/exports
+  echo "/data  node2(rw,sync,no_subtree_check)" >> /etc/exports
+  echo "/data  node3(rw,sync,no_subtree_check)" >> /etc/exports
   exportfs -a
 
   # Restarting NFS server for sharing the /data directory over NFS
@@ -36,9 +38,9 @@ create_NFS_service()
 
 create_NFS_mount () 
 {
-
+# Add more nodes or change names as needed to reflect your cluster
 # Creating NFS Mount Point on worker nodes
-for node in worker0 worker1
+for node in node1 node2 node3
 do
     scp /etc/hosts ubuntu@$node:~/
     ssh -t ubuntu@$node "sudo mv -f ~/hosts /etc/hosts && \
