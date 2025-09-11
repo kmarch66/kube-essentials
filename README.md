@@ -16,8 +16,11 @@ Add private IP's and node names to the /etc/hosts file it should look something 
 127.0.0.1 localhost
 
 <control0 private IP> control0
+
 <node1 private IP> node1
+
 <node2 private IP> node2
+
 <node3 private IP> node3
 
 ::1     ip6-localhost ip6-loopback
