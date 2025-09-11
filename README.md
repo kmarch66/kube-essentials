@@ -15,19 +15,16 @@ Add private IP's and node names to the /etc/hosts file it should look something 
 
 127.0.0.1 localhost
 
-<control0 private IP> control0
+ <control0 private IP>  control0
+ <node1 private IP>     node1
+ <node2 private IP>     node2
+ <node3 private IP>     node3
 
-<node1 private IP> node1
-
-<node2 private IP> node2
-
-<node3 private IP> node3
-
-::1     ip6-localhost ip6-loopback
-fe00::0 ip6-localnet
-ff00::0 ip6-mcastprefix
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
+ ::1     ip6-localhost ip6-loopback
+ fe00::0 ip6-localnet
+ ff00::0 ip6-mcastprefix
+ ff02::1 ip6-allnodes
+ ff02::2 ip6-allrouters
 
 
 $ ping -c 4 node1
